@@ -37,6 +37,17 @@ for(let i = 0; i < 50; i++){
 }
 ```
 
+## Usage
+### Loading Module
+NPM
+```bash
+npm i threadpool-lite
+```
+CDN
+```html
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/threadpool-lite"></script>
+```
+
 ## API
 **Kind**: global class  
 
