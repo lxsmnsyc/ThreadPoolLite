@@ -1,0 +1,33 @@
+{
+  "name": "threadpool-lite",
+  "version": "1.0.0",
+  "description": "A JS Library for creating Web Worker pools",
+  "main": "index.js",
+  "scripts": {
+    "test": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LXSMNSYC/ThreadPoolLite.git"
+  },
+  "keywords": [
+    "concurrency",
+    "thread",
+    "threads",
+    "multithread",
+    "multithreading",
+    "threadpool",
+    "thread-pool",
+    "thread-pools",
+    "web-worker",
+    "webworker",
+    "worker",
+    "workers"
+  ],
+  "author": "LXSMNSYC (alexis.munsayac@gmail.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/LXSMNSYC/ThreadPoolLite/issues"
+  },
+  "homepage": "https://github.com/LXSMNSYC/ThreadPoolLite#readme"
+}
