@@ -1,6 +1,6 @@
 {
   "name": "threadpool-lite",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "A JS Library for creating Web Worker pools",
   "main": "index.js",
   "scripts": {
