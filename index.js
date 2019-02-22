@@ -9,13 +9,19 @@ var ThreadPoolLite = (function () {
     const workerScript = `
         (function workerScript(){
             self.addEventListener('message', e => {
-                let result = eval(e.data);
+                let result;
+                try{
+                    result = eval(e.data);
+                }
+                catch(err){
+                    setTimeout(function() { throw err; }); 
+                }
 
                 if(result instanceof Promise){
                     result.then(x => {
                         self.postMessage(x);
-                    }).catch(t => {
-                        self.postMessage(t);
+                    }).catch(err => {
+                        setTimeout(function() { throw err; }); 
                     })
                 } else {
                     self.postMessage(result);
