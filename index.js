@@ -49,31 +49,39 @@ var ThreadPoolLite = (function () {
              * Create all workers
              * 
              */
+            let toIdle = worker => {
+                /**
+                 * 
+                 *  Check for other tasks
+                 * 
+                 */
+                if(queue.length > 0){
+                    /**
+                     * 
+                     *  Send another task to this worker
+                     * 
+                     */
+                    let task = queue.shift();
+                    worker.postMessage(task[0]);
+                    tasks.set(worker, task[1]);
+                } else {
+                    this.working = this.working.filter(e => worker !== e);
+                    workers.push(worker);
+                    tasks.set(worker, null);
+                }
+            }
             for(let i = 0; i < workerCount; i++){
                 let worker = new Worker(url);
                 workers[i] = worker;
 
                 worker.addEventListener('message', e => {
-                    tasks.get(worker)(e.data);
-                    /**
-                     * 
-                     *  Check for other tasks
-                     * 
-                     */
-                    if(queue.length > 0){
-                        /**
-                         * 
-                         *  Send another task to this worker
-                         * 
-                         */
-                        let task = queue.shift();
-                        worker.postMessage(task[0]);
-                        tasks.set(worker, task[1]);
-                    } else {
-                        this.working = this.working.filter(e => worker !== e);
-                        workers.push(worker);
-                        tasks.set(worker, null);
-                    }
+                    tasks.get(worker).resolve(e.data);
+                    toIdle(worker);
+                });
+
+                worker.addEventListener('error', e => {
+                    tasks.get(worker).reject(e);
+                    toIdle(worker);
                 });
             }
             this.tasks = tasks;
@@ -93,17 +101,21 @@ var ThreadPoolLite = (function () {
          * @returns {Promise}
          */
         run(runnable){
-            let fulfill = null;
+            let deferred = {
+                resolve: null, 
+                reject: null
+            };
 
             let promise = new Promise((resolve, reject) => {
-                fulfill = resolve;
+                deferred.resolve = resolve;
+                deferred.reject = reject;
             });
             /**
              * 
              *  Enqueue the task 
              *
              */
-            this.queue.push(['('+runnable.toString()+')()', fulfill]);
+            this.queue.push(['('+runnable.toString()+')()', deferred]);
             /**
              * 
              *  Check for idle workers
