@@ -11,18 +11,23 @@ The example below displays 10 random numbers per 3 seconds.
  *  Create 10 Workers 
  * 
  */
-let tp = new ThreadPoolLite(10); 
+let tp = new ThreadPoolLite(20); 
 
 /**
  * 
- *  Generate 50 tasks
+ *  Generate 20 tasks
  * 
  *  The task is to output a random number after 3 seconds
  *  of their current runtime.
  * 
  */
-for(let i = 0; i < 50; i++){ 
-    tp.run(function (){
+for(let i = 0; i < 20; i++){
+    /**
+     * 
+     *    You can use raw functions or template strings
+     *
+     */
+    tp.run(`function (){
         /**
          * 
          *  ThreadPoolLite workers can handle Promise
@@ -30,12 +35,36 @@ for(let i = 0; i < 50; i++){
          * 
          */
         return new Promise(function (resolve, reject){
-            setTimeout(function (){
-                resolve(Math.random());
+            setTimeout(function(){
+                resolve(`+i+`);
             }, 3000)
         })
-    }).then(console.log);
+    }`).then(console.log)
 }
+```
+
+Example Output:
+```
+19
+18
+16
+15
+17
+13
+14
+8
+5
+10
+9
+4
+2
+0
+6
+1
+12
+11
+7
+3
 ```
 
 ## Usage
