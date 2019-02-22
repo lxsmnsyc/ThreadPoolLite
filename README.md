@@ -75,7 +75,7 @@ npm i threadpool-lite
 ```
 CDN
 ```html
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/threadpool-lite"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/threadpool-lite@1.2.2/index.min.js"></script>
 ```
 
 ## API
