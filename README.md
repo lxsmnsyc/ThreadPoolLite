@@ -1,6 +1,7 @@
 # ThreadPoolLite
 A library for creating Web Worker pools.
 
+[![](https://data.jsdelivr.com/v1/package/npm/threadpool-lite/badge)](https://www.jsdelivr.com/package/npm/threadpool-lite)
 ## Example
 
 The example below displays 10 random numbers per 3 seconds.
@@ -33,7 +34,7 @@ for(let i = 0; i < 50; i++){
                 resolve(Math.random());
             }, 3000)
         })
-    }, console.log)
+    }).then(console.log);
 }
 ```
 
