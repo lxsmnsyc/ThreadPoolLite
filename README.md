@@ -49,11 +49,9 @@ CDN
 ```
 
 ## API
-**Kind**: global class  
-
 * [ThreadPoolLite](#ThreadPoolLite)
     * [new ThreadPoolLite(workerCount)](#new_ThreadPoolLite_new)
-    * [.run(runnable, then)](#ThreadPoolLite+run)
+    * [.run(runnable)](#ThreadPoolLite+run) ⇒ <code>Promise</code>
     * [.terminate()](#ThreadPoolLite+terminate)
     * [.getActiveCount()](#ThreadPoolLite+getActiveCount)
     * [.getIdleCount()](#ThreadPoolLite+getIdleCount)
@@ -71,7 +69,7 @@ your hardware has.
 
 <a name="ThreadPoolLite+run"></a>
 
-### threadPoolLite.run(runnable, then)
+### threadPoolLite.run(runnable) ⇒ <code>Promise</code>
 Runs(or enqueues, if no idle workers are available) a task.
 
 Tasks have scope of their own, and cannot access their parent scope.
@@ -81,7 +79,6 @@ Tasks have scope of their own, and cannot access their parent scope.
 | Param | Type | Description |
 | --- | --- | --- |
 | runnable | <code>function</code> | the task the worker receives |
-| then | <code>function</code> | a function that executes with the returned value of the fulfilled task |
 
 <a name="ThreadPoolLite+terminate"></a>
 

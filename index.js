@@ -42,8 +42,8 @@ var ThreadPoolLite = (function () {
              * The array of workers
              */
             let workers = [];
-            let tasks = new WeakMap();
             let queue = [];
+            let tasks = new WeakMap();
             /**
              *
              * Create all workers
@@ -76,9 +76,9 @@ var ThreadPoolLite = (function () {
                     }
                 });
             }
+            this.tasks = tasks;
             this.worker = workers;
             this.queue = queue;
-            this.tasks = tasks;
             this.working = [];
         }
 
@@ -90,15 +90,20 @@ var ThreadPoolLite = (function () {
          * 
          * 
          * @param {Function} runnable - the task the worker receives
-         * @param {Function} then - a function that executes with the returned value of the fulfilled task
+         * @returns {Promise}
          */
-        run(runnable, then){
+        run(runnable){
+            let fulfill = null;
+
+            let promise = new Promise((resolve, reject) => {
+                fulfill = resolve;
+            });
             /**
              * 
              *  Enqueue the task 
              *
              */
-            this.queue.push(['('+runnable.toString()+')()', then]);
+            this.queue.push(['('+runnable.toString()+')()', fulfill]);
             /**
              * 
              *  Check for idle workers
@@ -121,6 +126,8 @@ var ThreadPoolLite = (function () {
                 this.working.push(worker);
                 this.tasks.set(worker, task[1]);
             }
+
+            return promise;
         }
 
         /**
