@@ -15,6 +15,7 @@ var ThreadPoolLite = (function () {
                 }
                 catch(err){
                     setTimeout(function() { throw err; }); 
+                    return;
                 }
 
                 if(result instanceof Promise){
@@ -80,15 +81,15 @@ var ThreadPoolLite = (function () {
                 let worker = new Worker(url);
                 workers[i] = worker;
 
-                worker.addEventListener('message', e => {
+                worker.onmessage = e => {
                     tasks.get(worker).resolve(e.data);
                     toIdle(worker);
-                });
+                }
 
-                worker.addEventListener('error', e => {
-                    tasks.get(worker).reject(e);
+                worker.onerror = e => {
+                    tasks.get(worker).reject(e.message);
                     toIdle(worker);
-                });
+                }
             }
             this.tasks = tasks;
             this.worker = workers;
