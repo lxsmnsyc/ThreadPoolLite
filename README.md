@@ -101,6 +101,8 @@ Get the idle workers count
 **Kind**: instance method of [<code>ThreadPoolLite</code>](#ThreadPoolLite)
 
 ## Changelogs
+* 1.2.1
+    * Fixed worker error handling
 * 1.2.0
     * Proper error handling
 * 1.1.0
